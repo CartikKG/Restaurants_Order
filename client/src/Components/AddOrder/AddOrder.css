@@ -62,8 +62,8 @@
 
   border: 1px solid rgb(229, 216, 216);
 }
-#qty {
-  width: 20%;
+#phoneNumbers {
+  width: 25%;
 }
 #groupMember > div {
   display: flex;
@@ -117,12 +117,28 @@
 .youTake h1 {
   font-size: 12px;
 }
-#allproduct {
+#addUser {
   width: 80%;
   height: 500px;
   margin: auto;
   margin-top: 10px;
   border: 1px solid rgb(192, 232, 255);
+}
+#addUser > form {
+  display: flex;
+  gap: 10px;
+  width: 70%;
+  margin: auto;
+  border: 1px solid red;
+  /* flex-direction: column */
+  /* width: ; */
+}
+#addUser input {
+    margin: auto;
+  border-radius: 6px;
+  font-size: 17px;
+  padding: 2px;
+  border: 1px solid black;
 }
 @media (max-width: 560px) {
   #inputBox {
@@ -159,7 +175,7 @@
   .imgforpe {
     display: none;
   }
-  #qty {
+  #phoneNumbers {
     width: 44%;
   }
 }

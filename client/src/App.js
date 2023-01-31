@@ -3,13 +3,16 @@ import "./App.css";
 import AllRoutes from "./Components/AllRoutes/AllRoutes";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./Components/Navbar/Navbar";
+import AuthContextProvider from "./Context/context";
 function App() {
   return (
     <>
-      <ChakraProvider>
-        <Navbar />
-        <AllRoutes />
-      </ChakraProvider>
+      <AuthContextProvider>
+        <ChakraProvider>
+          <Navbar />
+          <AllRoutes />
+        </ChakraProvider>
+      </AuthContextProvider>
     </>
   );
 }

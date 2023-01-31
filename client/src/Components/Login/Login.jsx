@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Flex,
   Box,
@@ -13,7 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { loginUser } from "../../Actions/actions";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/context";
 const Login = () => {
+  const { setAuth } = useContext(AuthContext);
   const toast = useToast();
   const navigate = useNavigate();
   async function loginfun() {
@@ -31,7 +33,7 @@ const Login = () => {
     } else {
       let res = await loginUser({ phoneNumber, password });
       if (!res.error) {
-        localStorage.setItem('token',res.token)
+        localStorage.setItem("token", res.token);
         toast({
           title: "Login Successful",
           description: "",
@@ -40,7 +42,8 @@ const Login = () => {
           position: "top",
           isClosable: true,
         });
-        navigate("/addorder");
+        await setAuth(true)
+        await navigate("/addorder");
       } else {
         toast({
           title: "Login Failed!",
