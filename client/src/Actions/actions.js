@@ -10,7 +10,7 @@ const registeredUser = async (data) => {
     let res2 = await res.json();
     return res2;
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };
 const loginUser = async (data) => {
@@ -25,7 +25,7 @@ const loginUser = async (data) => {
     let res2 = await res.json();
     return res2;
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };
 const addOrderfun = async (data) => {
@@ -42,7 +42,7 @@ const addOrderfun = async (data) => {
     let res2 = await res.json();
     return res2;
   } catch (error) {
-    return error;
+    console.log(error)
   }
 };
 const getOrder=async(userId="")=>{
