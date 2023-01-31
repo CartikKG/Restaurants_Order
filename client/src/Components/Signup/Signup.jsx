@@ -9,14 +9,44 @@ import {
   Stack,
   Button,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { registeredUser } from "../../Actions/actions";
 const Signup = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+ async function Signup() {
+    const name = document.getElementById("name").value;
+    const phoneNumber = document.getElementById("phoneNumber").value;
+    const password = document.getElementById("password").value;
+    if (name == "" || phoneNumber == "" || password == "") {
+      toast({
+        title: "SignUp Failed!!",
+        description: "Fill all the details to Signup..",
+        status: "error",
+        duration: 2000,
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      let res = await registeredUser({ name, phoneNumber, password });
+      console.log(res)
+      if (!res.error) {
+        toast({
+          title: "SignUp Successful",
+          description: "Login to Continue..",
+          status: "success",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+      }
+    }
+  }
   return (
     <Flex
       minH={"100vh"}
-  
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
@@ -31,15 +61,15 @@ const Signup = () => {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Enter Name</FormLabel>
-              <Input type="name" />
+              <Input type="text" id="name" />
             </FormControl>
             <FormControl id="email">
               <FormLabel>Mobile Number</FormLabel>
-              <Input type="number" />
+              <Input type="number" id="phoneNumber" />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input type="password" id="password" />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -55,6 +85,7 @@ const Signup = () => {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={Signup}
               >
                 Sign up
               </Button>

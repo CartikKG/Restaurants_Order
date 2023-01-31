@@ -1,4 +1,6 @@
 const User = require("../model/userModel");
+const config = require("../config/config");
+const jwt = require("jsonwebtoken");
 const Order = require("../model/orderModel");
 const bscryptjs = require("bcryptjs");
 const express = require("express");
@@ -12,11 +14,11 @@ function generateToken(user) {
 }
 
 route.post("/add-user", async (req, res) => {
-  const { name, phoneNumber, password } = req.body;
+  let { name, phoneNumber, password } = req.body;
   try {
-    const exitisUser = await User.findOne({ phoneNumber });
+    let exitisUser = await User.findOne({ phoneNumber });
     if (exitisUser) {
-      return " Users Alrady exists with the given email";
+    return   res.send({ error: " Users Alrady exists with the given email" });
     }
     password = bscryptjs.hashSync(password);
     let user = await User.create({
@@ -26,13 +28,15 @@ route.post("/add-user", async (req, res) => {
     });
     user = user.toJSON();
     delete user.password;
-    let res = generateToken(user);
-    res.send({ res: res });
+    let ress = generateToken(user);
+    res.send({ res: ress });
   } catch (error) {
-    res.send({ error: "Someting went Wrong" });
+    // console.log(error)
+    res.send({ error });
   }
 });
 route.post("/login-user", async (req, res) => {
+  let { phoneNumber, password } = req.body;
   try {
     const exist = await User.findOne({
       phoneNumber,
