@@ -11,17 +11,9 @@ const AllOrder = () => {
   const { allOrder } = useContext(AuthContext);
   return (
     <div>
-      <div id="inputBox">
-        <Input
-          placeholder="Enter User ID"
-          id="userId"
-          background="white"
-          w={"100%"}
-        />
-
-        <Button colorScheme="pink">Search</Button>
-      </div>
+     
       <div id="addUser">
+        <h1 style={{textAlign:"center",fontSize:"20px"}}>All User Order</h1>
         <table>
           <thead>
             <tr>

@@ -89,4 +89,17 @@ route.get("/get-order", authorization, async (req, res) => {
     res.send({ error: "Someting went Wrong" });
   }
 });
+route.get("/get-order/:id", authorization, async (req, res) => {
+  const id = req.params.id;
+  try {
+    let order = await Order.findOne({ owner: id }).populate("owner");
+    if (order) {
+      res.send({ order });
+    } else {
+      res.send({ error: "Order Not Found" });
+    }
+  } catch (error) {
+    res.send({ error: "Someting went Wrong" });
+  }
+});
 module.exports = route;
