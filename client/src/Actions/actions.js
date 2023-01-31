@@ -45,7 +45,19 @@ const addOrderfun = async (data) => {
     return error;
   }
 };
-const logout = () => {
-  localStorage.clear();
-};
-export { registeredUser, loginUser, logout, addOrderfun };
+const getOrder=async(userId="")=>{
+    let token=  localStorage.getItem('token')
+    try {
+        let res=await fetch(`${process.env.REACT_APP_BACKEND_URL}/get-order`,{
+            headers: {
+               "Authorization":`${token}`
+            }
+            
+        })
+        let res2=await res.json();
+        return res2;
+    } catch (error) {
+        console.log(error)
+    }
+}
+export { registeredUser, loginUser, addOrderfun ,getOrder};

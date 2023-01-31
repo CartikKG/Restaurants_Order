@@ -124,21 +124,17 @@
   margin-top: 10px;
   border: 1px solid rgb(192, 232, 255);
 }
-#addUser > form {
-  display: flex;
-  gap: 10px;
-  width: 70%;
-  margin: auto;
-  border: 1px solid red;
-  /* flex-direction: column */
-  /* width: ; */
+table{
+    width: 100%;
 }
-#addUser input {
-    margin: auto;
-  border-radius: 6px;
-  font-size: 17px;
-  padding: 2px;
-  border: 1px solid black;
+table th {
+    color: rgb(165, 0, 146);
+}
+table,
+th,
+td {
+    text-align: center;
+  border: 1px solid rgb(225, 225, 225);
 }
 @media (max-width: 560px) {
   #inputBox {

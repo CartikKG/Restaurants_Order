@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Input,
   InputLeftElement,
@@ -7,14 +7,17 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import "./AddOrder.css";
-import { addOrderfun } from "../../Actions/actions";
+import { addOrderfun, getOrder } from "../../Actions/actions";
+import { useEffect } from "react";
+import { AuthContext } from "../../Context/context";
 const AddOrder = () => {
+  const { allOrder, setAllOrder } = useContext(AuthContext);
   const toast = useToast();
   async function add() {
-    const itemName = document.getElementById("title").value;
+    const userId = document.getElementById("userId").value;
     const sub_total = document.getElementById("totalBill").value;
     const phoneNumber = document.getElementById("phoneNumbers").value;
-    if (itemName == "" || sub_total == "" || phoneNumber == "") {
+    if (userId == "" || sub_total == "" || phoneNumber == "") {
       toast({
         title: "Add item Failed",
         description: "Fill all the input",
@@ -24,8 +27,7 @@ const AddOrder = () => {
         isClosable: true,
       });
     } else {
-      let res = await addOrderfun({ itemName, sub_total, phoneNumber });
-      console.log(res);
+      let res = await addOrderfun({ userId, sub_total, phoneNumber });
       if (!res.error) {
         toast({
           title: "Add item Success",
@@ -35,6 +37,7 @@ const AddOrder = () => {
           position: "top",
           isClosable: true,
         });
+        getOrderfun();
       } else {
         toast({
           title: "Add item Failed",
@@ -45,15 +48,24 @@ const AddOrder = () => {
           isClosable: true,
         });
       }
-      // console.log(e=)
     }
   }
+  function getOrderfun() {
+    getOrder()
+      .then((res) => {
+        setAllOrder(res);
+      })
+      .catch((err) => {});
+  }
+  useEffect(() => {
+    getOrderfun();
+  }, []);
   return (
     <div>
       <div id="inputBox">
         <Input
           placeholder="Enter User ID"
-          id="title"
+          id="userId"
           background="white"
           w={"50%"}
         />
@@ -67,7 +79,7 @@ const AddOrder = () => {
             children="₹"
           />
           <Input
-            placeholder="Item Price"
+            placeholder="Sub Total"
             id="totalBill"
             type="number"
             background="white"
@@ -84,12 +96,27 @@ const AddOrder = () => {
         </Button>
       </div>
       <div id="addUser">
-        <form action="">
-          <input type="text" placeholder="Enter User Name" />
-          <input type="text" placeholder="Enter User Phone Number" />
-          <input type="text" placeholder="Enter User Password" />
-          <input type="submit" value="Save User" />
-        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>UserId</th>
+              <th>SubTotal</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allOrder.order &&
+              allOrder.order.allOrder.map((el, i) => {
+                return (
+                  <tr key={`${el * 2.3} +${el.userId} `}>
+                    <td>{el.userId}</td>
+                    <td>{el.sub_total}</td>
+                    <td>{el.phoneNumber}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

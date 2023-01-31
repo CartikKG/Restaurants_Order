@@ -57,18 +57,17 @@ route.post("/login-user", async (req, res) => {
 });
 route.post("/add-order", authorization, async (req, res) => {
   const user = req.user;
-  let { itemName, phoneNumber, sub_total } = req.body;
+  let { userId, phoneNumber, sub_total } = req.body;
   try {
-    // const user=await User.findOne({phoneNumber:phoneNumber})
     const order = await Order.findOne({ owner: user._id });
     if (order) {
-      order.allOrder.push({ itemName, sub_total });
+      order.allOrder.push({ userId, phoneNumber, sub_total });
       await order.save();
       return res.send({ order });
     } else {
       const order = await Order.create({
         owner: user._id,
-        allOrder: [{ itemName, sub_total }],
+        allOrder: [{ userId, phoneNumber, sub_total }],
       });
       return res.send({ order });
     }
@@ -79,7 +78,8 @@ route.post("/add-order", authorization, async (req, res) => {
 route.get("/get-order", authorization, async (req, res) => {
   const user = req.user;
   try {
-    let order = Order.findOne({ owner: user._id }).populate("owner");
+    let order = await Order.findOne({ owner: user._id }).populate("owner");
+
     if (order) {
       res.send({ order });
     } else {

@@ -10,10 +10,8 @@ const orderSchema = new mongoose.Schema(
     },
     allOrder: [
       {
-        itemName: { type: String },
-        price: { type: String },
-        quantity: { type: Number },
-        date: { type: Date },
+        userId: { type: String },
+        phoneNumber: { type: String },
         sub_total: { type: Number },
       },
     ],
