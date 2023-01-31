@@ -18,7 +18,7 @@ route.post("/add-user", async (req, res) => {
   try {
     let exitisUser = await User.findOne({ phoneNumber });
     if (exitisUser) {
-    return   res.send({ error: " Users Alrady exists with the given email" });
+      return res.send({ error: " Users Alrady exists with the given email" });
     }
     password = bscryptjs.hashSync(password);
     let user = await User.create({
@@ -31,7 +31,6 @@ route.post("/add-user", async (req, res) => {
     let ress = generateToken(user);
     res.send({ res: ress });
   } catch (error) {
-    // console.log(error)
     res.send({ error });
   }
 });
@@ -42,18 +41,18 @@ route.post("/login-user", async (req, res) => {
       phoneNumber,
     });
     if (!exist) {
-      return " User Not Found with this email";
+      return res.send({ error: " User Not Found with this email" });
     }
     const match = bscryptjs.compareSync(password, exist.password);
 
     if (match) {
       const token = generateToken(exist.toJSON());
-      res.send({ token });
+      return res.send({ token });
     } else {
-      res.send({ error: "password is incorrect" });
+      return res.send({ error: "Password is incorrect" });
     }
   } catch (error) {
-    res.send({ error: "Someting went Wrong" });
+    return res.send({ error: "Someting went Wrong" });
   }
 });
 route.post("/add-order", authorization, async (req, res) => {

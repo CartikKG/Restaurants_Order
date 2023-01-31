@@ -21,7 +21,7 @@ const Login = () => {
     const password = document.getElementById("password").value;
     if (phoneNumber == "" || password == "") {
       toast({
-        title: "Login Failed!!",
+        title: "Login Failed!",
         description: "Fill all the details to Signup..",
         status: "error",
         duration: 2000,
@@ -29,19 +29,27 @@ const Login = () => {
         isClosable: true,
       });
     } else {
-        let res =await loginUser({phoneNumber,password});
-        console.log(res);
-        if (!res.error) {
-          toast({
-            title: "Login Successful",
-            description: "",
-            status: "success",
-            duration: 2000,
-            position: "top",
-            isClosable: true,
-          });
-          navigate("/addorder");
-        }
+      let res = await loginUser({ phoneNumber, password });
+      if (!res.error) {
+        toast({
+          title: "Login Successful",
+          description: "",
+          status: "success",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+        navigate("/addorder");
+      } else {
+        toast({
+          title: "Login Failed!",
+          description: `${res.error}`,
+          status: "error",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+      }
     }
   }
   return (
@@ -58,6 +66,7 @@ const Login = () => {
           boxShadow={"lg"}
           p={8}
         >
+          <FormLabel textAlign={"center"}>Login</FormLabel>
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Mobile Number</FormLabel>
@@ -85,7 +94,10 @@ const Login = () => {
               >
                 Sign in
               </Button>
-              <Link to="/signup"> Don't have any account </Link>
+              <Link style={{ textAlign: "center" }} to="/signup">
+                {" "}
+                Don't have any account{" "}
+              </Link>
             </Stack>
           </Stack>
         </Box>

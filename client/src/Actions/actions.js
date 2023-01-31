@@ -7,7 +7,7 @@ const registeredUser = async (data) => {
       },
       body: JSON.stringify(data),
     });
-    let res2=await res.json();
+    let res2 = await res.json();
     return res2;
   } catch (error) {
     return error;
@@ -22,10 +22,10 @@ const loginUser = async (data) => {
       },
       body: JSON.stringify(data),
     });
-    let res2=await res.json();
+    let res2 = await res.json();
     return res2;
   } catch (error) {
     return error;
   }
 };
-export {registeredUser, loginUser}
+export { registeredUser, loginUser };

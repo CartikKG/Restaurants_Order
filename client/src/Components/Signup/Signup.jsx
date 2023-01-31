@@ -16,7 +16,7 @@ import { registeredUser } from "../../Actions/actions";
 const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
- async function Signup() {
+  async function Signup() {
     const name = document.getElementById("name").value;
     const phoneNumber = document.getElementById("phoneNumber").value;
     const password = document.getElementById("password").value;
@@ -31,12 +31,20 @@ const Signup = () => {
       });
     } else {
       let res = await registeredUser({ name, phoneNumber, password });
-      console.log(res)
       if (!res.error) {
         toast({
           title: "SignUp Successful",
           description: "Login to Continue..",
           status: "success",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "SignUp Successful",
+          description: `${res.error}`,
+          status: "error",
           duration: 2000,
           position: "top",
           isClosable: true,
@@ -58,6 +66,7 @@ const Signup = () => {
           boxShadow={"lg"}
           p={8}
         >
+          <FormLabel textAlign={"center"}>SignUp</FormLabel>
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Enter Name</FormLabel>
@@ -90,7 +99,10 @@ const Signup = () => {
                 Sign up
               </Button>
             </Stack>
-            <Link to="/"> Already have an account </Link>
+            <Link style={{ textAlign: "center" }} to="/">
+              {" "}
+              Already have an account{" "}
+            </Link>
           </Stack>
         </Box>
       </Stack>
