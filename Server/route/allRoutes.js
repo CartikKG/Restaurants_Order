@@ -1,4 +1,5 @@
 const User = require("../model/userModel");
+const Order = require("../model/orderModel");
 const bscryptjs = require("bcryptjs");
 const express = require("express");
 const authorization = require("../middleware/authorization");
@@ -28,7 +29,7 @@ route.post("/add-user", async (req, res) => {
     let res = generateToken(user);
     res.send({ res: res });
   } catch (error) {
-    res.send({ Error: "Someting went Wrong" });
+    res.send({ error: "Someting went Wrong" });
   }
 });
 route.post("/login-user", async (req, res) => {
@@ -45,12 +46,44 @@ route.post("/login-user", async (req, res) => {
       const token = generateToken(exist.toJSON());
       res.send({ token });
     } else {
-      res.send({ Error: "password is incorrect" });
+      res.send({ error: "password is incorrect" });
     }
   } catch (error) {
-    res.send({ Error: "Someting went Wrong" });
+    res.send({ error: "Someting went Wrong" });
   }
 });
-route.post("/add-order", authorization, (req, res) => {});
-route.get("/get-order", authorization, (req, res) => {});
+route.post("/add-order", authorization, async (req, res) => {
+  const user = req.user;
+  let { itemName, quantity, date, sub_total, userId } = req.body;
+  try {
+    const order = await Order.findOne({ owner: userId });
+    if (order) {
+      order.allOrder.push({ itemName, quantity, date, sub_total });
+      order.save();
+      return res.send({ cart: cart });
+    } else {
+      const order = await Order.create({
+        owner: userId,
+        allOrder: [{ itemName, quantity, date, sub_total }],
+      });
+      return res.send({ order });
+    }
+  } catch (error) {
+    res.send({ error: "Someting went Wrong" });
+  }
+});
+route.get("/get-order", authorization, async (req, res) => {
+  const user = req.user;
+
+  try {
+    let order = Order.findOne({ owner: user._id }).populate("owner");
+    if (order) {
+      res.send({ order });
+    } else {
+      res.send({ error: "Order Not Found" });
+    }
+  } catch (error) {
+    res.send({ error: "Someting went Wrong" });
+  }
+});
 module.exports = route;
