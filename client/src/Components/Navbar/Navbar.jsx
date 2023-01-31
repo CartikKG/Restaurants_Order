@@ -26,8 +26,11 @@ const Navbar = () => {
           <Link to="/signup">Signup</Link>
         </>
       )}
-      <Link to="/addorder">New Order</Link>
-      <Link to="/allorder">All Order</Link>
+      {
+        flag && <> <Link to="/addorder">New Order</Link>
+      <Link to="/allorder">All Order</Link></>
+      }
+      
     </div>
   );
 };

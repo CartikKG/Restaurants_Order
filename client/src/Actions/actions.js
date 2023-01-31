@@ -29,11 +29,13 @@ const loginUser = async (data) => {
   }
 };
 const addOrderfun = async (data) => {
+  let token=  localStorage.getItem('token')
   try {
     let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/add-order`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
+         "Authorization":`${token}`
       },
       body: JSON.stringify(data),
     });

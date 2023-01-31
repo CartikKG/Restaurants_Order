@@ -19,9 +19,10 @@ const AddOrder = () => {
           });
     }else{
         let res=await addOrderfun({itemName,sub_total,quantity});
+        console.log(res)
         if(!res.error){
             toast({
-                title: "Add item Succesfully",
+                title: "Add item Success",
                 description: "",
                 status: "success",
                 duration: 2000,
