@@ -117,11 +117,12 @@
 .youTake h1 {
   font-size: 12px;
 }
-#allproduct{
-    width: 90%;
-    margin: auto;
-    margin-top: 10px;
-    border: 1px solid rgb(0, 162, 255);
+#allproduct {
+  width: 80%;
+  height: 500px;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid rgb(192, 232, 255);
 }
 @media (max-width: 560px) {
   #inputBox {

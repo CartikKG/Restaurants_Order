@@ -31,6 +31,7 @@ const Login = () => {
     } else {
       let res = await loginUser({ phoneNumber, password });
       if (!res.error) {
+        localStorage.setItem('token',res.token)
         toast({
           title: "Login Successful",
           description: "",

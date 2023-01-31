@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import AddOrder from '../AddOrder/AddOrder'
 import AllOrder from '../AllOrder/AllOrder'
@@ -6,6 +7,7 @@ import Login from '../Login/Login'
 import Signup from '../Signup/Signup'
 
 const AllRoutes = () => {
+
   return (
    <Routes>
     <Route path='/' element={<Login/>}/>

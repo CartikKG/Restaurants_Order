@@ -57,17 +57,17 @@ route.post("/login-user", async (req, res) => {
 });
 route.post("/add-order", authorization, async (req, res) => {
   const user = req.user;
-  let { itemName, quantity, date, sub_total } = req.body;
+  let { itemName, quantity, sub_total } = req.body;
   try {
     const order = await Order.findOne({ owner: user._id });
     if (order) {
-      order.allOrder.push({ itemName, quantity, date, sub_total });
+      order.allOrder.push({ itemName, quantity, sub_total });
       order.save();
       return res.send({ cart: cart });
     } else {
       const order = await Order.create({
         owner: userId,
-        allOrder: [{ itemName, quantity, date, sub_total }],
+        allOrder: [{ itemName, quantity, sub_total }],
       });
       return res.send({ order });
     }

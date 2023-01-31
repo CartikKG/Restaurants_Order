@@ -28,4 +28,22 @@ const loginUser = async (data) => {
     return error;
   }
 };
-export { registeredUser, loginUser };
+const addOrderfun = async (data) => {
+  try {
+    let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/add-order`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res2 = await res.json();
+    return res2;
+  } catch (error) {
+    return error;
+  }
+};
+const logout = () => {
+  localStorage.clear();
+};
+export { registeredUser, loginUser, logout, addOrderfun };
