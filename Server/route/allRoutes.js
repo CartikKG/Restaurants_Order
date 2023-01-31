@@ -54,9 +54,9 @@ route.post("/login-user", async (req, res) => {
 });
 route.post("/add-order", authorization, async (req, res) => {
   const user = req.user;
-  let { itemName, quantity, date, sub_total, userId } = req.body;
+  let { itemName, quantity, date, sub_total } = req.body;
   try {
-    const order = await Order.findOne({ owner: userId });
+    const order = await Order.findOne({ owner: user._id });
     if (order) {
       order.allOrder.push({ itemName, quantity, date, sub_total });
       order.save();
@@ -74,7 +74,6 @@ route.post("/add-order", authorization, async (req, res) => {
 });
 route.get("/get-order", authorization, async (req, res) => {
   const user = req.user;
-
   try {
     let order = Order.findOne({ owner: user._id }).populate("owner");
     if (order) {
